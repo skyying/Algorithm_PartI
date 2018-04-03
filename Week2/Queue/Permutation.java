@@ -1,0 +1,26 @@
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+
+
+
+public class Permutation {
+
+  public static void main(String[] args) {
+
+    int k = Integer.parseInt(args[0]);
+    // TODO Auto-generated method stub
+
+    RandomizedQueue<String> q = new RandomizedQueue<String>();
+
+    while (!StdIn.isEmpty()) {
+      q.enqueue(StdIn.readString());
+    }
+
+    
+    for (int i = 0; i < k; i++) {
+    	StdOut.println(q.dequeue());
+    }
+
+  }
+
+}
