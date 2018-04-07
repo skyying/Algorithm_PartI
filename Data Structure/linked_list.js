@@ -55,25 +55,24 @@ function LinkedList(){
         var current  = this.head;
         var newNode = new Node(val); 
         var count = 0;
-        
-        if( n > this.length() + 1){
+        if( n > len){
+            console.log("index out of boundary");
             return "Index out of boundary";
         }else if(n === 0){  // first position
             this.addToFirst(val);
-        }else if(n === len + 1){ // last position
+        }else if(n === len){ // last position
             this.addToLast(val);
         }else{
-            
             while(current){
                 if(count === (n - 1) ){
                    tmp = current.next; 
                    current.next = newNode;
                    newNode.next = tmp;
-                   break; 
                 }
                 current = current.next;
                 count++;
             }
+            return;
         }
        
         return  this.head;
@@ -96,7 +95,7 @@ function LinkedList(){
             }else if(this.last.val < val){
                 this.addToLast(val);
                 break;
-            }else if(current.data === val || (prev < val && val < current.val)){
+            }else if(current.val === val || (prev < val && val < current.val)){
                 this.addToNth(count, val);
                 break;
             }
@@ -106,24 +105,37 @@ function LinkedList(){
         }
 
         return this.head;
-
         
     };
    
     this.insertSorted = function(){
-       // 把目前的list sorted過一次 
-       
+   
         var current = this.head.next;
-        var aaa = new LinkedList();
-        aaa.head.val = this.head.val;
-     
+        var newList = new LinkedList();
+        newList.head.val = this.head.val;
+
         while(current){
-            aaa.sortedInsert(current.val);
+            newList.sortedInsert(current.val);
             current = current.next;
         } 
-        this.head = aaa.head;
-        this.last = aaa.last;
-        return aaa.head;
+        this.head = newList.head;
+        this.last = newList.last;
+
+    };
+   
+    this.removeDuplicates = function(){
+        var current = this.head;
+        if(!current) return;
+
+        while(current){
+            if(current.next && current.val === current.next.val ){
+                var nextNext = current.next.next;
+                current.next = nextNext;
+            }else{
+                current = current.next;
+            }
+        }
+        return this.head;
     };
    
 
@@ -136,12 +148,12 @@ function LinkedList(){
 
 
 var a  = new LinkedList();
-a.head.val = 5;
-a.addToFirst(0);
-a.addToFirst(3);
+a.head.val = 0;
 
-console.log("before, a.head: ", a.head);
-console.log("before last: ", a.last);
-console.log(a.insertSorted());
-console.log("after first", a.head);
-console.log("after last", a.last);
+a.addToFirst(0);
+a.addToFirst(0);
+a.addToFirst(0);
+a.insertSorted();
+a.removeDuplicates();
+console.log("a.head", a.head);
+//console.log(a.removeDuplicates())
